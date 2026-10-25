@@ -1,0 +1,6 @@
+{
+  "name": "RAIDLab — Simulador de RAID y Tolerancia a Fallos",
+  "description": "Simulador interactivo de arreglos de discos RAID (0, 1, 5, 6 y 10), cálculo de capacidad útil, paridad y tolerancia a fallos con reconstrucción en tiempo real.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

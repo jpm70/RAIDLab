@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="Captura del Modo Tutorial Guiado Paso a Paso y Exportador de Informes PDF/TXT">
+  <rect width="1200" height="620" fill="#0b0f17" />
+
+  <!-- Panel Resaltado con Contorno Verde Esmeralda (.tutorial-highlight-target) -->
+  <rect x="36" y="42" width="680" height="536" rx="12" fill="#0f172a" stroke="#10b981" stroke-width="3" />
+  <rect x="30" y="36" width="692" height="548" rx="15" fill="none" stroke="#10b981" stroke-width="6" opacity="0.22" />
+
+  <text x="60" y="80" fill="#10b981" font-family="monospace" font-size="12" font-weight="bold">● ELEMENTO RESALTADO POR EL TUTORIAL GUIADO (.tutorial-highlight-target)</text>
+  <text x="60" y="108" fill="#f8fafc" font-family="sans-serif" font-size="18" font-weight="bold">02. Bastidor de Discos Físicos y Monitor S.M.A.R.T.</text>
+
+  <!-- Bahías resumidas dentro del panel resaltado -->
+  <rect x="60" y="132" width="305" height="190" rx="8" fill="#2a1205" stroke="#f97316" stroke-width="2" />
+  <polygon points="82,155 90,169 74,169" fill="#f97316" />
+  <text x="98" y="167" fill="#fb923c" font-family="monospace" font-size="13" font-weight="bold">BAY-01 · PRE-FALLO S.M.A.R.T.</text>
+  <text x="78" y="195" fill="#fed7aa" font-family="monospace" font-size="11.5">Tiempo de uso: 43.200 h / 40.000 h</text>
+  <rect x="78" y="206" width="268" height="7" rx="3.5" fill="#090d14" />
+  <rect x="78" y="206" width="268" height="7" rx="3.5" fill="#f97316" />
+  <rect x="78" y="232" width="268" height="32" rx="6" fill="#431407" stroke="#f97316" />
+  <text x="212" y="253" fill="#fdba74" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">🔄 Reemplazo Preventivo (0 h)</text>
+  <text x="78" y="295" fill="#fdba74" font-family="sans-serif" font-size="11">Icono naranja de advertencia antes del fallo total.</text>
+
+  <rect x="385" y="132" width="305" height="190" rx="8" fill="#2b0d12" stroke="#ef4444" stroke-width="2" />
+  <text x="405" y="167" fill="#f87171" font-family="monospace" font-size="13" font-weight="bold">✕ BAY-02 · AVERIADO (OFFLINE)</text>
+  <text x="405" y="195" fill="#fca5a5" font-family="monospace" font-size="11.5">Fallo físico inyectado por el estudiante</text>
+  <rect x="405" y="218" width="265" height="46" rx="6" fill="#450a0a" stroke="#ef4444" />
+  <text x="537" y="246" fill="#fecaca" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">D_perdido = D1 ⊕ D3 ⊕ Paridad_P</text>
+  <text x="405" y="295" fill="#fca5a5" font-family="sans-serif" font-size="11">Volumen en estado DEGRADADO sin perder datos.</text>
+
+  <!-- Vista previa del Informe exportable debajo -->
+  <rect x="60" y="344" width="630" height="210" rx="8" fill="#090d14" stroke="#334155" />
+  <text x="80" y="372" fill="#10b981" font-family="monospace" font-size="12" font-weight="bold">📄 VISTA PREVIA DEL INFORME TÉCNICO EXPORTABLE (.PDF y .TXT):</text>
+  <text x="80" y="398" fill="#cbd5e1" font-family="monospace" font-size="10.5">====================================================================</text>
+  <text x="80" y="416" fill="#e2e8f0" font-family="monospace" font-size="10.5">UN FANTASMA EN EL SISTEMA · RAIDLAB — INFORME TÉCNICO DE SIMULACIÓN</text>
+  <text x="80" y="436" fill="#94a3b8" font-family="monospace" font-size="10.5">- BAY-01: 4 TB -&gt; Estado: ALERTA PRE-FALLO S.M.A.R.T. (43.200 h)</text>
+  <text x="80" y="454" fill="#f87171" font-family="monospace" font-size="10.5">- BAY-02: 4 TB -&gt; Estado: AVERIADO (OFFLINE) | Recalculado vía XOR</text>
+  <text x="80" y="472" fill="#38bdf8" font-family="monospace" font-size="10.5">- Telemetría IOPS: 34.800 IOPS (−42% Penalización Lectura Degradada)</text>
+  <rect x="80" y="496" width="210" height="36" rx="6" fill="#10b981" />
+  <text x="185" y="519" fill="#052e16" font-family="sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle">Descargar Informe PDF (.pdf)</text>
+  <rect x="304" y="496" width="210" height="36" rx="6" fill="#0284c7" />
+  <text x="409" y="519" fill="#f0f9ff" font-family="sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle">Descargar Texto Plano (.txt)</text>
+
+  <!-- Flecha conectora del Tooltip Flotante -->
+  <polygon points="736,180 752,168 752,192" fill="#0b111d" stroke="#10b981" stroke-width="2" />
+
+  <!-- Tooltip Flotante del Modo Tutorial Guiado (#guided-tutorial-popover) -->
+  <rect x="750" y="76" width="414" height="440" rx="12" fill="#0b111d" stroke="#10b981" stroke-width="2" />
+  <rect x="772" y="100" width="96" height="24" rx="5" fill="#064e3b" stroke="#10b981" />
+  <text x="820" y="116" fill="#34d399" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">PASO 4 DE 7</text>
+  <text x="880" y="116" fill="#94a3b8" font-family="monospace" font-size="11">Panel 02 · Bastidor Hot-Swap</text>
+
+  <!-- Puntos de progreso del tutorial -->
+  <rect x="772" y="138" width="18" height="6" rx="3" fill="#059669" />
+  <rect x="796" y="138" width="18" height="6" rx="3" fill="#059669" />
+  <rect x="820" y="138" width="18" height="6" rx="3" fill="#059669" />
+  <rect x="844" y="138" width="34" height="6" rx="3" fill="#10b981" />
+  <rect x="884" y="138" width="18" height="6" rx="3" fill="#334155" />
+  <rect x="908" y="138" width="18" height="6" rx="3" fill="#334155" />
+  <rect x="932" y="138" width="18" height="6" rx="3" fill="#334155" />
+
+  <text x="772" y="176" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="bold">4. Estado DEGRADADO y Paridad XOR</text>
+  <text x="772" y="204" fill="#cbd5e1" font-family="sans-serif" font-size="12">Al fallar BAY-02, el arreglo entra en estado DEGRADADO:</text>
+  <text x="772" y="224" fill="#cbd5e1" font-family="sans-serif" font-size="12">no se pierde ningún dato porque el controlador reconstruye</text>
+  <text x="772" y="244" fill="#cbd5e1" font-family="sans-serif" font-size="12">cada sector faltante aplicando XOR en tiempo real sobre</text>
+  <text x="772" y="264" fill="#cbd5e1" font-family="sans-serif" font-size="12">las unidades sobrevivientes.</text>
+
+  <!-- Caja de estado reactivo dentro del tooltip -->
+  <rect x="772" y="286" width="370" height="94" rx="8" fill="#090d14" stroke="#1e293b" />
+  <text x="788" y="312" fill="#10b981" font-family="monospace" font-size="11.5" font-weight="bold">BAY-02 = BAY-01 ⊕ BAY-03 ⊕ BAY-04</text>
+  <text x="788" y="338" fill="#e2e8f0" font-family="sans-serif" font-size="11.5">✓ ¡Acción detectada en vivo! Has provocado una</text>
+  <text x="788" y="356" fill="#e2e8f0" font-family="sans-serif" font-size="11.5">avería en BAY-02 y el volumen opera vía paridad.</text>
+
+  <!-- Botón de acción del paso -->
+  <rect x="772" y="396" width="370" height="38" rx="8" fill="#0284c7" stroke="#38bdf8" />
+  <text x="957" y="420" fill="#f0f9ff" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle">🔧 Iniciar Rebuild de unidad averiada</text>
+
+  <!-- Botones Anterior / Siguiente -->
+  <rect x="772" y="456" width="110" height="36" rx="6" fill="#1e293b" stroke="#334155" />
+  <text x="827" y="479" fill="#e2e8f0" font-family="sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle">← Anterior</text>
+  <rect x="1012" y="456" width="130" height="36" rx="6" fill="#10b981" />
+  <text x="1077" y="479" fill="#052e16" font-family="sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle">Siguiente →</text>
+</svg>
