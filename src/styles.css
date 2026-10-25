@@ -1,0 +1,886 @@
+@import "tailwindcss";
+
+/* Tipografías: Outfit (títulos), Plus Jakarta Sans (texto) e IBM Plex Mono (datos),
+   servidas desde la propia web (sin Google Fonts) y solo con el subconjunto latino. */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url('@fontsource/outfit/files/outfit-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url('@fontsource/outfit/files/outfit-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2') format('woff2');
+}
+
+@theme {
+  --font-display: 'Outfit', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
+
+:root {
+  --bg-canvas: #0b0f17;
+  --bg-panel: #111827;
+  --bg-surface: #172033;
+  --bg-elevated: #1e293b;
+  --border-subtle: #1e293b;
+  --border-strong: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-nominal: #10b981;
+  --accent-nominal-bg: rgba(16, 185, 129, 0.1);
+  --accent-warning: #f59e0b;
+  --accent-warning-bg: rgba(245, 158, 11, 0.12);
+  --accent-rebuild: #0ea5e9;
+  --accent-rebuild-bg: rgba(14, 165, 233, 0.12);
+  --accent-critical: #ef4444;
+  --accent-critical-bg: rgba(239, 68, 68, 0.14);
+}
+
+/* Tema Claro de Alto Contraste: Technical / Blueprint */
+html.theme-blueprint {
+  --bg-canvas: #eef4fa;
+  --bg-panel: #ffffff;
+  --bg-surface: #f1f6fb;
+  --bg-elevated: #e2ecf7;
+  --border-subtle: #cbd5e1;
+  --border-strong: #94a3b8;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --accent-nominal: #047857;
+  --accent-nominal-bg: rgba(5, 150, 105, 0.12);
+  --accent-warning: #b45309;
+  --accent-warning-bg: rgba(217, 119, 6, 0.14);
+  --accent-rebuild: #0369a1;
+  --accent-rebuild-bg: rgba(2, 132, 199, 0.14);
+  --accent-critical: #b91c1c;
+  --accent-critical-bg: rgba(220, 38, 38, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-canvas);
+  background-image:
+    radial-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+    radial-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+html.theme-blueprint body {
+  background-image:
+    linear-gradient(to right, rgba(2, 132, 199, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(2, 132, 199, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+}
+
+.font-display {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-mono-tabular {
+  font-family: 'IBM Plex Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.balance-text {
+  text-wrap: balance;
+}
+
+/* Contenedor principal de escritorio (1440px max) */
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Paneles estructurales con borde hairline de 1px */
+.tech-panel {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+}
+
+.tech-subpanel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+}
+
+/* Estados semánticos del banner de estado del volumen */
+.state-banner {
+  border-radius: 10px;
+  padding: 1.125rem 1.25rem;
+  border: 1px solid var(--border-strong);
+  transition: opacity 150ms cubic-bezier(0.16, 1, 0.3, 1), transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.state-banner.optimo {
+  background-color: rgba(16, 185, 129, 0.07);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.state-banner.degradado {
+  background-color: rgba(245, 158, 11, 0.09);
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+.state-banner.reconstruyendo {
+  background-color: rgba(14, 165, 233, 0.09);
+  border-color: rgba(14, 165, 233, 0.5);
+}
+
+.state-banner.critico {
+  background-color: rgba(239, 68, 68, 0.11);
+  border-color: rgba(239, 68, 68, 0.55);
+}
+
+/* Tarjetas de bahías de discos en el rack */
+.disk-bay {
+  position: relative;
+  background-color: #131c2e;
+  border: 1px solid #293548;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+}
+
+.disk-bay:hover {
+  transform: translateY(-2px);
+  border-color: #475569;
+}
+
+.disk-bay:focus-visible {
+  outline: 2px solid var(--accent-nominal);
+  outline-offset: 2px;
+}
+
+.disk-bay.disk-healthy {
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.disk-bay.disk-healthy:hover {
+  border-color: rgba(239, 68, 68, 0.65);
+}
+
+/* Estado de Alerta de Pre-fallo S.M.A.R.T. (Superado umbral de horas de uso) */
+.disk-bay.disk-prefail {
+  background-color: rgba(154, 52, 18, 0.22);
+  border-color: #f97316;
+  box-shadow: inset 0 0 0 1px rgba(249, 115, 22, 0.28);
+}
+
+.disk-bay.disk-prefail:hover {
+  border-color: #fb923c;
+}
+
+@keyframes prefailPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.08);
+  }
+}
+
+.prefail-status-icon {
+  color: #f97316;
+  animation: prefailPulse 1.6s ease-in-out infinite;
+}
+
+.btn-prefail-orange {
+  background-color: rgba(249, 115, 22, 0.18);
+  color: #fdba74;
+  border: 1px solid rgba(249, 115, 22, 0.55);
+}
+
+.btn-prefail-orange:hover:not(:disabled) {
+  background-color: rgba(249, 115, 22, 0.3);
+}
+
+.disk-bay.disk-failed {
+  background-color: rgba(127, 29, 29, 0.22);
+  border-color: #ef4444;
+}
+
+.disk-bay.disk-rebuilding {
+  background-color: rgba(12, 74, 110, 0.24);
+  border-color: #0ea5e9;
+}
+
+.disk-bay.disk-unrecoverable {
+  background-color: rgba(69, 10, 10, 0.38);
+  border-color: #dc2626;
+}
+
+/* Subgrupo espejo para RAID 10 */
+.subgroup-container {
+  border: 1px dashed #334155;
+  border-radius: 12px;
+  padding: 0.875rem;
+  background-color: rgba(15, 23, 42, 0.55);
+}
+
+.subgroup-container.subgroup-degraded {
+  border-color: rgba(245, 158, 11, 0.55);
+  background-color: rgba(245, 158, 11, 0.04);
+}
+
+.subgroup-container.subgroup-failed {
+  border-color: rgba(239, 68, 68, 0.7);
+  background-color: rgba(239, 68, 68, 0.06);
+}
+
+/* Botones interactivos */
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), opacity 120ms cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 40px;
+}
+
+.btn-action:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-action:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary-green {
+  background-color: #10b981;
+  color: #052e16;
+  border: 1px solid #34d399;
+}
+
+.btn-primary-green:hover:not(:disabled) {
+  background-color: #34d399;
+}
+
+.btn-rebuild-blue {
+  background-color: #0284c7;
+  color: #f0f9ff;
+  border: 1px solid #38bdf8;
+}
+
+.btn-rebuild-blue:hover:not(:disabled) {
+  background-color: #0369a1;
+}
+
+.btn-danger-red {
+  background-color: rgba(239, 68, 68, 0.16);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.btn-danger-red:hover:not(:disabled) {
+  background-color: rgba(239, 68, 68, 0.28);
+}
+
+.btn-neutral {
+  background-color: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid #334155;
+}
+
+.btn-neutral:hover:not(:disabled) {
+  background-color: #334155;
+}
+
+/* Controles segmentados de selección RAID */
+.raid-tab {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0.5rem 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 120ms ease;
+}
+
+.raid-tab:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.raid-tab.active {
+  background-color: #10b981;
+  color: #042f2e;
+  border-color: #34d399;
+}
+
+/* Sliders personalizados */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #1e293b;
+  border-radius: 999px;
+  outline: none;
+  border: 1px solid #334155;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #ecfdf5;
+  cursor: pointer;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #ecfdf5;
+  cursor: pointer;
+}
+
+/* Barra de progreso del Rebuild (animación por transform scaleX para rendimiento de compositor) */
+.rebuild-track {
+  width: 100%;
+  height: 12px;
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.rebuild-fill {
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #0284c7 0%, #10b981 100%);
+  transition: transform 120ms linear;
+}
+
+.rebuild-fill.rebuild-aborted {
+  background: #ef4444;
+}
+
+/* Bloques internos de cada disco */
+.block-chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6875rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.block-data {
+  background-color: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #6ee7b7;
+}
+
+.block-mirror {
+  background-color: rgba(14, 165, 233, 0.14);
+  border-color: rgba(14, 165, 233, 0.38);
+  color: #7dd3fc;
+}
+
+.block-parity-p {
+  background-color: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.45);
+  color: #fcd34d;
+}
+
+.block-parity-q {
+  background-color: rgba(168, 85, 247, 0.16);
+  border-color: rgba(168, 85, 247, 0.45);
+  color: #d8b4fe;
+}
+
+.block-dead {
+  background-color: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  text-decoration: line-through;
+}
+
+/* Gráfico de Anillos D3.js (Donut Chart Interactivo) */
+.d3-donut-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 210px;
+  height: 210px;
+  margin: 0 auto;
+}
+
+.d3-donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.d3-arc-slice {
+  cursor: pointer;
+  transition: opacity 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.d3-arc-slice:focus-visible {
+  outline: none;
+  stroke: #f8fafc !important;
+  stroke-width: 2.5px !important;
+}
+
+.d3-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background-color: rgba(15, 23, 42, 0.96);
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 0.45rem 0.65rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: #f8fafc;
+  z-index: 20;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.d3-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.donut-legend-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid #1e293b;
+  background-color: rgba(15, 23, 42, 0.65);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.donut-legend-btn:hover,
+.donut-legend-btn.active-segment {
+  border-color: #475569;
+  background-color: rgba(30, 41, 59, 0.85);
+}
+
+/* Logo oficial sin distorsión (proporción natural 1:1 preservada con object-fit: contain) */
+.brand-logo-img {
+  height: 2.35rem;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.hero-logo-img {
+  height: 4.5rem;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.footer-logo-img {
+  height: 2rem;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* Adaptación de alto contraste para el tema claro Technical / Blueprint */
+html.theme-blueprint header {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.theme-blueprint .disk-bay {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+html.theme-blueprint .disk-bay.disk-healthy {
+  border-color: #059669;
+  background-color: #ffffff;
+}
+
+html.theme-blueprint .disk-bay.disk-failed {
+  background-color: #fef2f2;
+  border-color: #dc2626;
+}
+
+html.theme-blueprint .disk-bay.disk-prefail {
+  background-color: #fff7ed;
+  border-color: #ea580c;
+  box-shadow: inset 0 0 0 1px rgba(234, 88, 12, 0.25);
+}
+
+html.theme-blueprint .btn-prefail-orange {
+  background-color: #ffedd5;
+  color: #9a3412;
+  border-color: #fb923c;
+}
+
+html.theme-blueprint .text-orange-400,
+html.theme-blueprint .text-orange-300 {
+  color: #c2410c !important;
+}
+
+html.theme-blueprint .disk-bay.disk-rebuilding {
+  background-color: #f0f9ff;
+  border-color: #0284c7;
+}
+
+html.theme-blueprint .disk-bay.disk-unrecoverable {
+  background-color: #fee2e2;
+  border-color: #b91c1c;
+}
+
+html.theme-blueprint .subgroup-container {
+  background-color: rgba(241, 245, 249, 0.85);
+  border-color: #64748b;
+}
+
+html.theme-blueprint .btn-neutral {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
+html.theme-blueprint .btn-neutral:hover:not(:disabled) {
+  background-color: #e2e8f0;
+}
+
+html.theme-blueprint .btn-danger-red {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #f87171;
+}
+
+html.theme-blueprint .donut-legend-btn {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #1e293b;
+}
+
+html.theme-blueprint .donut-legend-btn:hover,
+html.theme-blueprint .donut-legend-btn.active-segment {
+  background-color: #e2e8f0;
+  border-color: #64748b;
+}
+
+html.theme-blueprint .d3-tooltip {
+  background-color: rgba(255, 255, 255, 0.98);
+  border-color: #64748b;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+html.theme-blueprint .rebuild-track {
+  background-color: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+html.theme-blueprint input[type='range'] {
+  background: #cbd5e1;
+  border-color: #94a3b8;
+}
+
+html.theme-blueprint .block-data {
+  background-color: rgba(5, 150, 105, 0.14);
+  border-color: rgba(5, 150, 105, 0.5);
+  color: #065f46;
+}
+
+html.theme-blueprint .block-mirror {
+  background-color: rgba(2, 132, 199, 0.14);
+  border-color: rgba(2, 132, 199, 0.5);
+  color: #075985;
+}
+
+html.theme-blueprint .block-parity-p {
+  background-color: rgba(217, 119, 6, 0.16);
+  border-color: rgba(217, 119, 6, 0.55);
+  color: #92400e;
+}
+
+html.theme-blueprint .block-parity-q {
+  background-color: rgba(126, 34, 206, 0.14);
+  border-color: rgba(126, 34, 206, 0.5);
+  color: #6b21a8;
+}
+
+html.theme-blueprint .block-dead {
+  background-color: rgba(220, 38, 38, 0.16);
+  border-color: rgba(220, 38, 38, 0.6);
+  color: #991b1b;
+}
+
+/* Mapeo de utilidades tipográficas y bordes para alto contraste en modo Blueprint */
+html.theme-blueprint .text-slate-50,
+html.theme-blueprint .text-slate-100,
+html.theme-blueprint .text-slate-200 {
+  color: #0f172a !important;
+}
+
+html.theme-blueprint .text-slate-300 {
+  color: #1e293b !important;
+}
+
+html.theme-blueprint .text-slate-400,
+html.theme-blueprint .text-slate-500 {
+  color: #475569 !important;
+}
+
+html.theme-blueprint .text-emerald-400,
+html.theme-blueprint .text-emerald-300 {
+  color: #047857 !important;
+}
+
+html.theme-blueprint .text-sky-400,
+html.theme-blueprint .text-sky-300 {
+  color: #0369a1 !important;
+}
+
+html.theme-blueprint .text-amber-400,
+html.theme-blueprint .text-amber-300 {
+  color: #b45309 !important;
+}
+
+html.theme-blueprint .text-purple-300 {
+  color: #6b21a8 !important;
+}
+
+html.theme-blueprint .text-red-400,
+html.theme-blueprint .text-red-300 {
+  color: #b91c1c !important;
+}
+
+html.theme-blueprint .bg-slate-950,
+html.theme-blueprint .bg-slate-950\/90,
+html.theme-blueprint .bg-slate-900,
+html.theme-blueprint .bg-slate-900\/90 {
+  background-color: #e2e8f0 !important;
+}
+
+html.theme-blueprint .border-slate-800,
+html.theme-blueprint .border-slate-800\/90,
+html.theme-blueprint .border-slate-800\/80,
+html.theme-blueprint .border-slate-800\/70,
+html.theme-blueprint .border-slate-800\/60,
+html.theme-blueprint .border-slate-700 {
+  border-color: #cbd5e1 !important;
+}
+
+/* =========================================================================
+   MODO TUTORIAL GUIADO: RESALTADO DE ELEMENTOS Y TOOLTIP INTERACTIVO
+   ========================================================================= */
+.tutorial-highlight-target {
+  position: relative;
+  z-index: 35 !important;
+  outline: 2px solid #10b981 !important;
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 6px rgba(16, 185, 129, 0.18),
+    0 16px 38px -8px rgba(0, 0, 0, 0.75) !important;
+  transition:
+    outline-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+html.theme-blueprint .tutorial-highlight-target {
+  outline: 2.5px solid #0284c7 !important;
+  box-shadow:
+    0 0 0 6px rgba(2, 132, 199, 0.22),
+    0 16px 36px -8px rgba(15, 23, 42, 0.22) !important;
+}
+
+.tutorial-popover-card {
+  position: fixed;
+  z-index: 50;
+  width: min(410px, calc(100vw - 24px));
+  background-color: rgba(11, 17, 29, 0.97);
+  border: 1.5px solid #10b981;
+  border-radius: 12px;
+  box-shadow:
+    0 22px 48px -10px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(16, 185, 129, 0.25);
+  backdrop-filter: blur(12px);
+  transition:
+    top 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    left 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.theme-blueprint .tutorial-popover-card {
+  background-color: rgba(255, 255, 255, 0.98);
+  border-color: #0284c7;
+  box-shadow:
+    0 20px 44px -10px rgba(15, 23, 42, 0.24),
+    0 0 0 1px rgba(2, 132, 199, 0.25);
+}
+
+.tutorial-popover-arrow {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #0b111d;
+  border-left: 1.5px solid #10b981;
+  border-top: 1.5px solid #10b981;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+html.theme-blueprint .tutorial-popover-arrow {
+  background-color: #ffffff;
+  border-left-color: #0284c7;
+  border-top-color: #0284c7;
+}
+
+.tutorial-step-dot {
+  height: 6px;
+  border-radius: 9999px;
+  transition: all 180ms ease;
+  background-color: #334155;
+  width: 16px;
+}
+
+.tutorial-step-dot.active {
+  width: 28px;
+  background-color: #10b981;
+}
+
+.tutorial-step-dot.completed {
+  background-color: rgba(16, 185, 129, 0.45);
+}
+
+html.theme-blueprint .tutorial-step-dot {
+  background-color: #cbd5e1;
+}
+
+html.theme-blueprint .tutorial-step-dot.active {
+  background-color: #0284c7;
+}
+
+html.theme-blueprint .tutorial-step-dot.completed {
+  background-color: rgba(2, 132, 199, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Con Tailwind compilado, `hidden` vive en @layer utilities y pierde frente a
+   reglas propias sin capa como .btn-action { display: inline-flex }. */
+.btn-action.hidden {
+  display: none;
+}

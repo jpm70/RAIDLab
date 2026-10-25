@@ -1,135 +1,112 @@
-<div align="center">
+<p align="center">
+  <a href="https://www.unfantasmaenelsistema.com"><img src="src/assets/icono.png" width="110" alt="Un fantasma en el sistema"></a>
+</p>
 
-<a href="https://www.unfantasmaenelsistema.com/" target="_blank" rel="noopener noreferrer">
-  <img src="./public/assets/aistudio/icono_81a3db5b.png" alt="Logo Un Fantasma en el Sistema" width="96" height="96" />
-</a>
+<h1 align="center">RAIDLab</h1>
 
-# Un Fantasma en el Sistema · RAIDLab
+<p align="center">
+  <b>Simulador de RAID y tolerancia a fallos para clase</b><br>
+  RAID 0, 1, 5, 6 y 10 · Averías en caliente y durante el rebuild · Paridad bloque a bloque · Informe en PDF
+</p>
 
-### Simulador Interactivo de Arreglos RAID, Tolerancia a Fallos, Telemetría D3.js y Alertas S.M.A.R.T. de Pre-fallo
+<p align="center">
+  <a href="https://unfantasmaenelsistema.github.io/RAIDLab/"><b>▶ Abrir el simulador</b></a> ·
+  <a href="#qué-hace">Qué hace</a> ·
+  <a href="#para-clase">Para clase</a> ·
+  <a href="#cómo-calcula">Cómo calcula</a> ·
+  <a href="https://www.unfantasmaenelsistema.com">unfantasmaenelsistema.com</a> ·
+  <a href="LICENSE">MIT</a>
+</p>
 
-[![Web Oficial](https://img.shields.io/badge/Web_Oficial-unfantasmaenelsistema.com-10b981?style=for-the-badge)](https://www.unfantasmaenelsistema.com/)
-[![Arquitectura](https://img.shields.io/badge/Single--File-index.html_Aut%C3%B3nomo-0284c7?style=for-the-badge)](#despliegue-y-ejecucion)
-[![Visualización](https://img.shields.io/badge/D3.js_v7-Anillo_%2B_Curva_IOPS-f59e0b?style=for-the-badge)](#visualizacion-dinamica-con-d3js)
-[![Licencia](https://img.shields.io/badge/Licencia-MIT-64748b?style=for-the-badge)](./LICENSE)
+<p align="center">
+  <img src="https://img.shields.io/badge/navegador-sin_servidor-10b981?style=flat-square" alt="Sin servidor">
+  <img src="https://img.shields.io/badge/offline-1_archivo_HTML-0284c7?style=flat-square" alt="Versión offline en un archivo">
+  <img src="https://img.shields.io/badge/RAID-0_%C2%B7_1_%C2%B7_5_%C2%B7_6_%C2%B7_10-f59e0b?style=flat-square" alt="RAID 0, 1, 5, 6 y 10">
+  <img src="https://img.shields.io/badge/licencia-MIT-blue?style=flat-square" alt="MIT">
+</p>
 
-**Herramienta pedagógica interactiva de administración de sistemas y almacenamiento empresarial.**  
-Permite configurar arreglos **RAID 0, RAID 1, RAID 5, RAID 6 y RAID 10**, inspeccionar la distribución algebraica de bloques y paridad (`XOR` y Campos de Galois `GF(2⁸)`), analizar el tiempo de uso (**Power-On Hours**) mediante **Alertas Naranjas de Pre-fallo S.M.A.R.T.**, inyectar averías en caliente o durante una reconstrucción (*Rebuild*) y exportar informes de laboratorio en **PDF / TXT**.
+<p align="center">
+  <img src="docs/capturas/01-panel-oscuro.webp" width="900" alt="Panel de RAIDLab: escenarios de clase, estado del volumen, monitor S.M.A.R.T., bastidor de discos con sus bloques y configuración del arreglo">
+</p>
 
-[🌐 **Visitar Un Fantasma en el Sistema**](https://www.unfantasmaenelsistema.com/) · [📖 **Fundamentos Matemáticos**](#fundamentos-matematicos-de-tolerancia-a-fallos) · [🎓 **Modo Tutorial Guiado**](#modo-tutorial-guiado-paso-a-paso)
+Configuras un arreglo, haces clic en un disco para averiarlo y ves qué le pasa al volumen: si sigue vivo, cuánto rendimiento pierde, cómo se reconstruye y qué ocurre si cae otro disco a mitad de la reconstrucción. Todo con la matriz de bloques, la fórmula de capacidad y una bitácora del controlador a la vista.
 
-</div>
+> [!NOTE]
+> Es un modelo didáctico. Las reglas de tolerancia a fallos y las fórmulas de capacidad son las reales; los IOPS, los tiempos de reconstrucción y el desgaste de los discos son aproximaciones para que se vea el efecto en clase.
 
----
+## Qué hace
 
-## 📸 Capturas de Pantalla
+- **Cinco niveles** (RAID 0, 1, 5, 6 y 10) con sus reglas de discos mínimos y número par en RAID 10, de 2 a 12 bahías y de 1 a 20 TB por disco.
+- **Averías en el bastidor**: clic en un disco sano para averiarlo; clic en uno averiado para sustituirlo y reconstruirlo. Con el volumen perdido, sustituir discos ya no lo recupera (hace falta la copia de seguridad).
+- **Rebuild en vivo** con barra de progreso y un botón para provocar el 2.º fallo en plena reconstrucción: RAID 5 cae, RAID 6 aguanta y en RAID 10 depende de si cae el hermano del mismo par.
+- **Matriz de bloques**: datos, espejos y paridad rotativa P (XOR) y Q (Reed-Solomon) stripe a stripe, con la explicación de cómo se recupera cada bloque.
+- **Estadísticas**: capacidad bruta, útil y de redundancia, eficiencia en un anillo D3 y la fórmula con los valores del arreglo.
+- **Rendimiento**: IOPS del volumen con la penalización de escritura de cada nivel y la caída en modo degradado y durante el rebuild, en un gráfico que avanza segundo a segundo.
+- **Monitor S.M.A.R.T. simulado**: al envejecer, un disco reasigna sectores y se pone en naranja (pre-fallo); se puede sustituir preventivamente o dejar que falle.
+- **Tutorial guiado** de 7 pasos (paridad, coste de la redundancia, degradación, rebuild, rendimiento y doble fallo) y **3 casos rápidos** para clase.
+- **Informe** de la práctica en PDF o TXT con el estado final, los cálculos, el inventario de bahías y la bitácora.
+- Tema oscuro y claro (recuerda tu elección y, si no hay, sigue al sistema), usable con teclado y sin desbordes en móvil.
 
-### 1. Tema Oscuro `Hacker / Terminal` · Alertas Naranjas S.M.A.R.T. de Pre-fallo y Rebuild en Curso
-> Visualización del bastidor Hot-Swap donde `BAY-02` supera el umbral de horas de uso (`42.400 h / 40.000 h`) activando el **icono naranja de Pre-fallo S.M.A.R.T.**, mientras `BAY-03` ejecuta un *Rebuild* al 64% y los gráficos **D3.js** reflejan en tiempo real la eficiencia de capacidad y la caída del 72% en IOPS.
+<p align="center">
+  <img src="docs/capturas/02-raid5-fallo-en-rebuild.webp" width="900" alt="RAID 5 en fallo crítico: un segundo disco falla durante la reconstrucción y el rebuild se aborta">
+</p>
 
-![Captura Modo Hacker Terminal y Alertas S.M.A.R.T.](./docs/screenshots/captura-modo-hacker-smart.svg)
+## Para clase
 
----
+1. **Caso 1 · RAID 5 + fallo en rebuild**: un disco ya ha caído y la reconstrucción arranca sola. Pide a la clase que prediga qué pasa si cae otro disco ahora y pulsa **Provocar 2.º fallo en Rebuild**.
+2. **Caso 2 · RAID 6 doble paridad**: dos discos caídos y el volumen sigue entero. Un tercer fallo lo destruye.
+3. **Caso 3 · Subgrupos en RAID 10**: tres discos caídos, uno por par espejo, y el volumen vive; si cae el hermano de cualquiera de ellos, se pierde todo.
+4. Al terminar, **Exportar informe de simulación** con el nombre del alumno o del grupo y sus conclusiones.
 
-### 2. Tema Claro `Technical / Blueprint` (Alto Contraste) · Doble Paridad RAID 6 (`P + Q`)
-> Conmutación instantánea a estética de plano de ingeniería de alto contraste. Todos los trazos, ejes, pistas y gradientes de los gráficos **D3.js** se actualizan dinámicamente al cambiar de tema.
+¿Aula sin Internet? Pulsa **Versión offline**: descarga el simulador completo en un solo archivo (`raidlab.html`, ~1,5 MB) que funciona con doble clic y sin conexión, informe PDF incluido.
 
-![Captura Modo Technical Blueprint RAID 6](./docs/screenshots/captura-modo-blueprint-raid6.svg)
+<p align="center">
+  <img src="docs/capturas/03-raid10-claro.webp" width="440" alt="Tema claro: RAID 10 con tres subgrupos espejo degradados, un disco averiado en cada uno">
+  <img src="docs/capturas/04-raid6-matriz.webp" width="440" alt="Matriz de bloques de RAID 6 con dos discos caídos y la paridad P y Q rotando entre discos">
+</p>
 
----
+## Cómo calcula
 
-### 3. Modo `Tutorial Guiado Paso a Paso` y Exportador de Informes de Laboratorio (`.PDF` / `.TXT`)
-> Recorrido didáctico de 7 pasos que resalta cada panel de la interfaz mediante foco luminoso y tooltips interactivos que reaccionan en tiempo real a las acciones del estudiante.
+| Nivel | Discos | Capacidad útil | Aguanta | Penalización de escritura |
+| --- | :---: | --- | --- | :---: |
+| RAID 0 | ≥ 2 | N × S | 0 discos | 1 |
+| RAID 1 | ≥ 2 | S | N − 1 discos | N |
+| RAID 5 | ≥ 3 | (N − 1) × S | 1 disco | 4 |
+| RAID 6 | ≥ 4 | (N − 2) × S | 2 discos cualesquiera | 6 |
+| RAID 10 | ≥ 4, par | (N / 2) × S | 1 seguro; hasta N/2 si caen en pares distintos | 2 |
 
-![Captura Tutorial Guiado e Informe PDF](./docs/screenshots/captura-tutorial-guiado-y-reporte.svg)
+- Un disco **reconstruyéndose** aún no tiene sus datos completos: cuenta como no disponible. Por eso en RAID 5 un fallo durante el rebuild pierde el volumen.
+- **IOPS** = N × 15.000 / (0,7 + 0,3 × penalización), con 15.000 IOPS por disco (SSD) y una carga de 70 % lectura / 30 % escritura. En modo degradado y durante el rebuild se aplica una caída aproximada, mayor con paridad que con espejo.
+- **S.M.A.R.T.**: en un disco real las horas encendido (atributo 9) no disparan ninguna alerta; las de pre-fallo vienen de atributos como sectores reasignados (5), pendientes (197) o incorregibles (198). Aquí, para que se vea en clase, el disco empieza a reasignar sectores al pasar de un umbral de horas que puedes mover.
 
----
+<p align="center">
+  <img src="docs/capturas/05-tutorial.webp" width="900" alt="Tutorial guiado en el paso 2: explicación del XOR y la paridad rotativa sobre la matriz de bloques resaltada">
+</p>
 
-## ✨ Características Principales
-
-- **🎛️ Panel de Configuración con Validación Estricta de Topología**:
-  - Soporte para **RAID 0, RAID 1, RAID 5, RAID 6 y RAID 10 (1+0)**.
-  - Validación automática del mínimo de unidades físicas (`N ≥ 2` en RAID 0/1, `N ≥ 3` en RAID 5, `N ≥ 4` en RAID 6, `N ≥ 4` y **obligatoriamente par** en RAID 10) y tamaño por unidad (`1 TB` a `20 TB`).
-- **🟠 Sistema S.M.A.R.T. de Alertas de Pre-fallo por Tiempo de Funcionamiento (*Power-On Hours*)**:
-  - Cada bahía monitoriza sus horas de encendido acumuladas (`POH`) y sectores reasignados frente a un umbral configurable (`20.000 h – 50.000 h`, por defecto `40.000 h`).
-  - Al superar el umbral de uso, la unidad cambia su icono de estado a un **icono de advertencia naranja pulsante (`⚠️ PRE-FALLO S.M.A.R.T.`)** para alertar de una avería inminente antes de que alcance el colapso electromecánico (`55.000 h`).
-  - Incluye botón de **Reemplazo Preventivo (`0 h`)** en cada bahía afectada, botón para inyectar desgaste inmediato (`+Horas`) y reloj de **Auto-Desgaste continuo** (que se acelera bajo el estrés térmico/mecánico de un *Rebuild*).
-- **🖴 Bastidor Virtual Hot-Swap y Simulación de Fallos Catastróficos en Rebuild**:
-  - Haz clic en cualquier disco para provocar una avería física (`✕ AVERIADO`).
-  - Inicia el **Rebuild** con barra de progreso animada y provoca un **2.º fallo concurrente en pleno Rebuild** para demostrar por qué un RAID 5 colapsa mientras un RAID 6 sobrevive.
-- **📊 Visualización Dinámica con D3.js (v7)**:
-  - **Gráfico de Anillos Interactivo (`#d3-capacity-donut`)**: Representa la proporción exacta de **Capacidad Útil Efectiva** frente a **Redundancia / Paridad** con transiciones suaves de arco, tooltips e inspección por segmento.
-  - **Gráfico Lineal de Telemetría IOPS (`#d3-iops-line-chart`)**: Muestra en vivo cómo caen los IOPS servidos al Host cuando un disco entra en estado *Degradado* o *Reconstruyendo (Rebuild)*, contraponiendo la línea punteada de tráfico interno de paridad.
-- **🎓 Modo Tutorial Guiado Paso a Paso**:
-  - Recorrido interactivo de 7 etapas con resaltado de elementos (`.tutorial-highlight-target`) y tooltips flotantes que explican los conceptos de **paridad XOR, síndromes Reed-Solomon, degradación y caída de rendimiento** mientras el usuario interactúa con el simulador.
-- **🌓 Conmutador de Tema (`Hacker / Terminal` ↔ `Technical / Blueprint`)**:
-  - Alterna entre modo oscuro técnico y modo claro de alto contraste con persistencia en `localStorage` y repintado reactivo de todos los gráficos D3.js.
-- **📄 Exportador de Informes de Simulación (`.PDF` y `.TXT`)**:
-  - Genera un informe técnico multipágina en **PDF** (vía `jsPDF`) o en **texto plano (`.txt`)** con los datos del estudiante/grupo, fórmulas algebraicas, estado S.M.A.R.T. de cada bahía, telemetría IOPS e historial cronológico de eventos.
-
----
-
-## 🧮 Fundamentos Matemáticos de Tolerancia a Fallos
-
-Sea $N$ el número total de discos físicos instalados y $S$ la capacidad individual de cada disco en Terabytes ($\text{TB}$), con una capacidad bruta total $C_{\text{bruta}} = N \times S$:
-
-| Nivel RAID | Mín. Discos ($N$) | Capacidad Útil ($C_{\text{útil}}$) | Capacidad Redundancia ($C_{\text{red}}$) | Eficiencia | Tolerancia a Fallos | Ecuación Algebraica / Redundancia |
-| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **RAID 0** | $N \ge 2$ | $N \times S$ | $0\text{ TB}$ | $100\%$ | **$0\text{ discos}$** | Fragmentación pura (*Striping*) sin paridad. Si falla 1 disco, pérdida total. |
-| **RAID 1** | $N \ge 2$ | $1 \times S$ | $(N - 1) \times S$ | $\frac{1}{N}$ | **$N - 1\text{ discos}$** | Espejado completo (*Mirroring*). Sobrevive mientras quede $\ge 1$ unidad sana. |
-| **RAID 5** | $N \ge 3$ | $(N - 1) \times S$ | $1 \times S$ | $\frac{N - 1}{N}$ | **$1\text{ disco}$** | Paridad simple distribuida XOR: $P = D_1 \oplus D_2 \oplus \dots \oplus D_{N-1}$. |
-| **RAID 6** | $N \ge 4$ | $(N - 2) \times S$ | $2 \times S$ | $\frac{N - 2}{N}$ | **$2\text{ discos}$** | Doble paridad independiente $P$ ($\text{XOR}$) + $Q$ ($\text{GF}(2^8)$ Reed-Solomon). |
-| **RAID 10** | $N \ge 4$ (Par) | $\frac{N}{2} \times S$ | $\frac{N}{2} \times S$ | $50\%$ | **$1\text{ a }\frac{N}{2}\text{ discos}^*$** | $K = \frac{N}{2}$ subgrupos espejo (RAID 1) unidos en Stripe (RAID 0). |
-
-> **Nota sobre RAID 10 ($^*$)**: El volumen sobrevive a múltiples fallos simultáneos (hasta $N/2$ discos) **siempre que ocurran en subgrupos espejo distintos**. Si fallan las 2 unidades de un mismo subgrupo espejo, se pierde ese segmento del Stripe global y el volumen entra en **Fallo Crítico**.
-
----
-
-## 🚀 Despliegue y Ejecución
-
-### Opción A: Ejecución Directa Sin Servidor (Archivo Único `index.html`)
-El simulador completo está contenido en `index.html`. Puedes abrirlo directamente en cualquier navegador moderno o alojarlo en **GitHub Pages** sin necesidad de backend:
+## Usarlo en local
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/tu-usuario/raidlab-simulador-raid.git
-cd raidlab-simulador-raid
-
-# Abrir directamente index.html en el navegador (o usar cualquier servidor estático)
-npx serve .
+git clone https://github.com/unfantasmaenelsistema/RAIDLab.git
+cd RAIDLab
+npm ci
+npm run dev      # http://localhost:3000
+npm test         # 11 pruebas del motor (node --test, sin navegador)
+npm run build    # web en dist/ + dist/raidlab.html (versión offline)
 ```
 
-### Opción B: Entorno de Desarrollo con Vite
-Si deseas ejecutarlo con el servidor de desarrollo local incluido en el repositorio:
+Necesitas Node.js 22 o superior. El motor está en `src/lib/raid.js` sin DOM (reglas de cada nivel, capacidad, estado del volumen, reparto de bloques e IOPS) y es lo que cubren las pruebas; `src/app.js` es la interfaz en JavaScript sin framework, con d3 y jsPDF empaquetados, y `index.html` el marcado (Tailwind compilado con Vite). Cada cambio en `main` se prueba y se publica en GitHub Pages con `.github/workflows/pages.yml`.
 
-```bash
-npm install
-npm run dev
-```
-La aplicación estará disponible en `http://localhost:3000`.
+## Cambios
 
----
+**v2.0 (2026-10-25)** — revisada al pasar a la organización. La v1 la generó Google AI Studio y tenía estos problemas:
 
-## 📁 Estructura del Proyecto
+- **No se podía publicar**: no había workflow, el proyecto React/Vite estaba vacío (la app entera iba en `index.html`) y el logo usaba rutas absolutas que en `…github.io/RAIDLab/` daban 404.
+- **Dependía de tres CDN**: Tailwind en modo «play» (el propio Tailwind avisa de que no es para producción), d3 sin versión fija y jsPDF 2.5.2, con vulnerabilidades conocidas. La «descarga de index.html» copiaba la página tal cual: sin Internet no tenía estilos, gráficos ni logo.
+- **Un volumen perdido «resucitaba»**: tras un fallo crítico bastaba con hacer clic en el disco averiado para devolverlo a la vida y el arreglo volvía a degradado. Ahora un disco averiado se sustituye y reconstruye, y con el volumen perdido no hay vuelta atrás sin restaurar.
+- **S.M.A.R.T. mal explicado**: presentaba las horas de uso como la causa de la alerta de pre-fallo. Ahora el texto explica qué atributos avisan de verdad.
+- **IOPS**: RAID 5, 6 y 10 se calculaban sin penalización de escritura, y el eje «últimos 25 s» no era real (los puntos se añadían a cada clic o cada 150 ms durante el rebuild).
+- **Detalles**: el último paso del tutorial no hacía nada si llegabas con el volumen degradado; el consejo de «provoca otro fallo» seguía visible con el volumen ya perdido; los informes PDF mostraban `−` y `⊕` como caracteres rotos; cifras con punto decimal inglés; desborde horizontal en pantallas medianas; Google Fonts; capturas del README dibujadas a mano.
 
-```text
-├── docs/
-│   └── screenshots/
-│       ├── captura-modo-hacker-smart.svg        # Captura Modo Hacker + Alertas S.M.A.R.T. + D3.js
-│       ├── captura-modo-blueprint-raid6.svg     # Captura Modo Claro Blueprint + RAID 6
-│       └── captura-tutorial-guiado-y-reporte.svg# Captura Tutorial Guiado + Exportador PDF/TXT
-├── public/
-│   └── assets/
-│       └── aistudio/
-│           └── icono_81a3db5b.png               # Logo oficial de Un Fantasma en el Sistema
-├── index.html                                   # Simulador autónomo completo (HTML5 + CSS + D3.js + JS)
-├── package.json                                 # Scripts de construcción y servidor local Vite
-├── LICENSE                                      # Licencia MIT
-└── README.md                                    # Documentación completa del proyecto
-```
+## Créditos y licencia
 
----
-
-## 🔗 Autoría y Comunidad
-
-Desarrollado para **[Un Fantasma en el Sistema](https://www.unfantasmaenelsistema.com/)** — Recursos técnicos de ciberseguridad, administración de sistemas, redes y laboratorios prácticos de IT.
+Hecho por **[Un Fantasma en el Sistema](https://www.unfantasmaenelsistema.com/)** para las clases de administración de sistemas. Código abierto bajo licencia [MIT](LICENSE). Usa [d3](https://d3js.org/) (ISC), [jsPDF](https://github.com/parallax/jsPDF) (MIT) y las fuentes Outfit, Plus Jakarta Sans e IBM Plex Mono (OFL) vía [Fontsource](https://fontsource.org/).
